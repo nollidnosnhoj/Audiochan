@@ -1,18 +1,10 @@
-import React, { useCallback, useState } from "react";
-import {
-  Alert,
-  AlertIcon,
-  Box,
-  Button,
-  CloseButton,
-  Stack,
-} from "@chakra-ui/react";
+import React, { useState } from "react";
+import { Alert, Box, Button, CloseButton } from "@chakra-ui/react";
 import { useFormik } from "formik";
 import * as yup from "yup";
-import TextInput from "../../../components/form/TextInput";
-import { useAuth } from "~/contexts/AuthContext";
-import { apiErrorToast, successfulToast } from "~/utils/toast";
-import { isAxiosError } from "~/utils/axios";
+import TextInput from "../../../components/form/inputs/TextInput";
+import { useAuth } from "~/features/auth/hooks/useAuth";
+import { toast, isAxiosError } from "~/utils";
 import { ErrorResponse } from "~/lib/types";
 
 export type LoginFormValues = {
@@ -33,7 +25,7 @@ export default function LoginForm(props: LoginFormProps) {
     onSubmit: async (values) => {
       try {
         await login(values);
-        successfulToast({ message: "You have logged in successfully. " });
+        toast("success", { title: "You have logged in successfully. " });
         if (props.onSuccess) props.onSuccess();
       } catch (err) {
         let errorMessage = "An error has occurred.";

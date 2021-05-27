@@ -1,4 +1,5 @@
 export default {
+  IS_PRODUCTION: process.env.NEXT_PUBLIC_IS_PRODUCTION,
   BACKEND_API: process.env.NEXT_PUBLIC_BACKEND_API,
   IDENTITY: {
     usernameMinLength: 3,
@@ -8,16 +9,16 @@ export default {
     passwordRequiresDigit: true,
     passwordRequiresLowercase: true,
     passwordRequiresUppercase: true,
-    passwordRequiresNonAlphanumeric: false
+    passwordRequiresNonAlphanumeric: false,
   },
   UPLOAD: {
     AUDIO: {
       accept: ["audio/mp3", "audio/mpeg"],
-      maxSize: 262144000
+      maxSize: 262144000,
     },
     IMAGE: {
       accept: ["image/jpeg", "image/png", "image/gif"],
-      maxSize: 2097152
-    }
-  }
-}
+      maxSize: 2097152,
+    },
+  },
+};

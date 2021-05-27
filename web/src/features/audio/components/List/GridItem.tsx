@@ -1,24 +1,25 @@
 import { Box, Text } from "@chakra-ui/react";
-import React, { useMemo } from "react";
-import Picture from "~/components/Picture";
+import NextImage from "next/image";
+import React from "react";
 import Link from "~/components/Link";
-import { useUser } from "~/contexts/UserContext";
-import { AudioListItemProps } from "./ListItem";
+import { AudioListItemProps } from "./StackItem";
+import PictureContainer from "~/components/Picture/PictureContainer";
 
 export default function AudioGridItem(props: AudioListItemProps) {
-  const { audio, onPlayClick, isPlaying, removeArtistName = false } = props;
-
-  const { user: currentUser } = useUser();
-
-  const picture = useMemo(() => {
-    return audio?.picture
-      ? `https://audiochan-public.s3.amazonaws.com/${audio.picture}`
-      : "";
-  }, [audio.picture]);
+  const { audio, removeArtistName = false } = props;
 
   return (
     <Box>
-      <Picture source={picture} imageSize={200} borderWidth={1} />
+      <PictureContainer width={200} borderWidth="1px">
+        {audio.picture && (
+          <NextImage
+            src={audio.picture}
+            layout="fill"
+            objectFit="cover"
+            loading="lazy"
+          />
+        )}
+      </PictureContainer>
       <Box marginTop={2}>
         <Box>
           <Link

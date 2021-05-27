@@ -2,12 +2,11 @@ import React, { useState } from "react";
 import { Alert, Box, Button, CloseButton, Flex, Text } from "@chakra-ui/react";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import TextInput from "../../../components/form/TextInput";
+import TextInput from "../../../components/form/inputs/TextInput";
 import { validationMessages } from "~/utils";
-import api from "~/utils/api";
-import { successfulToast } from "~/utils/toast";
+import api from "~/lib/api";
+import { toast, isAxiosError } from "~/utils";
 import { ErrorResponse } from "~/lib/types";
-import { isAxiosError } from "~/utils/axios";
 import { usernameRule, passwordRule } from "~/features/user/schemas";
 
 type RegisterFormInputs = {
@@ -36,7 +35,7 @@ const schema: yup.SchemaOf<RegisterFormInputs> = yup
 
 interface RegisterFormProps {
   initialRef?: React.RefObject<HTMLInputElement>;
-  onSuccess: () => void;
+  onSuccess?: () => void;
 }
 
 export default function RegisterForm(props: RegisterFormProps) {
@@ -58,9 +57,9 @@ export default function RegisterForm(props: RegisterFormProps) {
 
       try {
         await api.post("auth/register", registrationRequest);
-        successfulToast({
+        toast("success", {
           title: "Thank you for registering.",
-          message: "You can now login to your account.",
+          description: "You can now login to your account.",
         });
         if (props.onSuccess) props.onSuccess();
       } catch (err) {

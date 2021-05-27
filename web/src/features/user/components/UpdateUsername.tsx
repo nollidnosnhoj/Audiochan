@@ -2,10 +2,10 @@ import React from "react";
 import { Button } from "@chakra-ui/react";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import TextInput from "~/components/form/TextInput";
-import { useUser } from "~/contexts/UserContext";
-import api from "~/utils/api";
-import { apiErrorToast, successfulToast } from "~/utils/toast";
+import TextInput from "~/components/form/inputs/TextInput";
+import { useUser } from "~/features/user/hooks/useUser";
+import api from "~/lib/api";
+import { errorToast, toast } from "~/utils";
 import { usernameRule } from "../schemas";
 
 export default function UpdateUsername() {
@@ -25,15 +25,15 @@ export default function UpdateUsername() {
 
       try {
         await api.patch("me/username", { newUsername });
-        successfulToast({
+        toast("success", {
           title: "Username updated.",
-          message: "You have successfully updated your username.",
+          description: "You have successfully updated your username.",
         });
         if (user) {
           updateUser({ ...user, username: newUsername });
         }
       } catch (err) {
-        apiErrorToast(err);
+        errorToast(err);
       } finally {
         setSubmitting(false);
       }
