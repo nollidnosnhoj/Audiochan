@@ -12,6 +12,7 @@ namespace Audiochan.Infrastructure.Persistence
         private readonly ApplicationDbContext _dbContext;
         private IDbContextTransaction? _currentTransaction;
         public IAudioRepository Audios { get; }
+        public IPlaylistRepository Playlists { get; }
         public IFavoriteAudioRepository FavoriteAudios { get; }
         public IFollowedUserRepository FollowedUsers { get; }
         public ITagRepository Tags { get; }
@@ -69,12 +70,14 @@ namespace Audiochan.Infrastructure.Persistence
             IAudioRepository audioRepository, 
             ITagRepository tagRepository, 
             IUserRepository userRepository, 
+            IPlaylistRepository playlistRepository,
             IFavoriteAudioRepository favoriteAudios, 
             IFollowedUserRepository followedUsers)
         {
             _dbContext = dbContext;
             Audios = audioRepository;
             Tags = tagRepository;
+            Playlists = playlistRepository;
             Users = userRepository;
             FavoriteAudios = favoriteAudios;
             FollowedUsers = followedUsers;
